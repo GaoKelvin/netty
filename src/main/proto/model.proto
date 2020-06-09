@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package com.proto;
+
+option java_multiple_files = true;
+option java_package = "com.example.entities";
+
+enum GatewayStatus {
+  GW_OK = 0;
+  GW_UNDER_MAINTENANCE = 1;
+  GW_WAIT_AND_RETRY = 2;
+  GW_ERROR = 3;
+  GW_REDIRECT = 4;
+  GW_NO_RESPONSE = 5;
+}
+
+enum Platform {
+  ANDROID = 0;
+  IOS = 1;
+}
+
+message ClientServerMessageHeader {
+  string service = 1;
+  string tokenId = 2;
+  string compressed = 3;
+  Platform platform = 4;
+  bool ignoreMaintenance = 5; // 是否不管停机维护
+  bool hasVersion = 6;
+  bool hasShard = 7;
+  string shard = 8;
+}
+
+message ServerClientMessageHeader{
+  string version = 1;
+  int64 timestamp = 2;
+  string tokenId = 3;
+  string newVersion = 4;
+  bool compressed = 5;
+  GatewayStatus status = 6;
+}
